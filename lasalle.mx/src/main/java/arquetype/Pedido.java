@@ -34,4 +34,10 @@ public class Pedido {
     public String getFecha() {
         return fecha;
     }
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+    
+    
 }
