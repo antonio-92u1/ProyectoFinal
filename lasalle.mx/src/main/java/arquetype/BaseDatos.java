@@ -55,17 +55,33 @@ public class BaseDatos {
 		}
 	}
 
-	public ArrayList<String> detectarAlergiasProducto(int idCliente,InterSushiEnsalda producto) {
+	public ArrayList<String> detectarAlergiasProducto(int idCliente, InterSushiEnsalda producto) {
+	    return compararAlergenos(idCliente, producto.getAlergenos());
+	}
+
+	public ArrayList<String> detectarAlergiasProducto(int idCliente, InterComida producto) {
+	    return compararAlergenos(idCliente, producto.getAlergenos());
+	}
+	
+	public ArrayList<String> detectarAlergiasProducto(int idCliente, InterPan producto) {
+	    return compararAlergenos(idCliente, producto.getAlergenos());
+	}
+	
+	public ArrayList<String> detectarAlergiasProducto(int idCliente, InterPostre producto) {
+	    return compararAlergenos(idCliente, producto.getAlergenos());
+	}
+	
+	public ArrayList<String> detectarAlergiasProducto(int idCliente, InterBebida producto) {
+	    return compararAlergenos(idCliente, producto.getAlergenos());
+	}
+
+	private ArrayList<String> compararAlergenos(int idCliente, ArrayList<String> alergiasProducto) {
 	    ArrayList<String> alertas = new ArrayList<>();
-	    ArrayList<String> alergiasCliente =obtenerAlergenosCliente(idCliente);
-	    ArrayList<String> alergiasProducto =producto.getAlergenos();
+	    ArrayList<String> alergiasCliente = obtenerAlergenosCliente(idCliente);
 
 	    for (String alergiaProducto : alergiasProducto) {
-
 	        for (String alergiaCliente : alergiasCliente) {
-
 	            if (alergiaProducto.equalsIgnoreCase(alergiaCliente)) {
-
 	                alertas.add(alergiaProducto);
 	            }
 	        }
