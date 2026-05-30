@@ -726,5 +726,6 @@ public class VentanaMenus {
         });
         dialog.setVisible(true);
     }
-    public JFrame getFrame() { return frame; }
+    public JFrame getFrame() { 
+    	return frame; }
 }

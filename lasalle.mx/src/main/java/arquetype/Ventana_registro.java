@@ -186,5 +186,6 @@ public class Ventana_registro {
         });
         
     }
-    public JFrame getFrame() { return frame; }
+    public JFrame getFrame() { 
+    	return frame; }
 }

@@ -126,12 +126,17 @@ public class Ventana_clientes {
 
 	private Color colorEstado(String estado) {
 	    switch (estado) {
-	        case "Pendiente":       return new Color(255, 200, 0);
-	        case "En preparación":  return new Color(255, 140, 0);
-	        case "Entregado":       return new Color(50, 200, 50);
-	        default:                return Color.GRAY;
+	        case "Pendiente":       
+	        	return new Color(255, 200, 0);
+	        case "En preparación":  
+	        	return new Color(255, 140, 0);
+	        case "Entregado":       
+	        	return new Color(50, 200, 50);
+	        default:                
+	        	return Color.GRAY;
 	    }
 	}
 
-	public JFrame getFrame() { return frame; }
+	public JFrame getFrame() { 
+		return frame; }
 }

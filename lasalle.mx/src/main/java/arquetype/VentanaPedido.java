@@ -84,6 +84,7 @@ public class VentanaPedido {
 		frame.getContentPane().add(btnFinalizar);
 	}
 	
-	public JFrame getFrame() { return frame; }
+	public JFrame getFrame() { 
+		return frame; }
 
 }
