@@ -92,6 +92,7 @@ public class BaseDatos {
 		}
 	}
 
+	//Cambio
 	public ArrayList<String> detectarAlergiasProducto(int idCliente, InterSushiEnsalda producto) {
 	    return compararAlergenos(idCliente, producto.getAlergenos());
 	}
