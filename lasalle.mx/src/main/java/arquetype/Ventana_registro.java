@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 public class Ventana_registro {
     private JFrame frame;
     private JTextField textField;
+    private JPanel panel_al;
+    private JPanel panel_in;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -79,7 +81,7 @@ public class Ventana_registro {
             "Mariscos", "Sésamo", "Soya", "Nueces", "Frutos Secos"
         ));
 
-        JPanel panel_al = new JPanel(new GridLayout(alergenos.size(), 1, 0, 2));
+        panel_al = new JPanel(new GridLayout(alergenos.size(), 1, 0, 2));
         panel_al.setBackground(Color.WHITE);
         panel_al.setPreferredSize(new Dimension(155, alergenos.size() * 22 + 10));
 
@@ -95,21 +97,19 @@ public class Ventana_registro {
         frame.getContentPane().add(scrollPane);
 
         ArrayList<String> ingredientes = new ArrayList<>(Arrays.asList(
-            "Aceite", "Aderezo césar", "Aguacate", "Ajonjoli", "Albahaca",
-            "Alga nori", "Apio", "Arrachera", "Arroz", "Atún",
-            "Azúcar", "Canela", "Carne", "Camarón", "Cecina",
-            "Cebolla", "Cerdo", "Cilantro", "Cocoa", "Costilla",
-            "Chocolate", "Chícharo", "Champiñones", "Elote", "Espinaca",
-            "Fresa", "Galleta", "Guacamole", "Harina", "Huevo",
-            "Jalapeño", "Jamón", "Jengibre", "Jitomate", "Leche",
-            "Lechuga", "Legumbres", "Manteca", "Mantequilla", "Mango",
-            "Mayonesa", "Nuez", "Pan", "Pasas", "Pepino",
-            "Piña", "Pimentón", "Pimiento", "Pollo", "Queso",
-            "Res", "Salmón", "Salsa BBQ", "Surimi", "Tocino",
-            "Tofu", "Tomate cherry", "Tortilla", "Vainilla", "Zanahoria"
+        		"Aceite", "Aderezo César", "Aguacate", "Albahaca",
+        	    "Alga Nori", "Apio", "Arrachera", "Arroz",
+        	    "Azúcar", "Canela", "Carne", "Cecina",
+        	    "Cebolla", "Cerdo", "Cilantro", "Cocoa", "Costilla",
+        	    "Chocolate", "Chícharo", "Champiñones", "Elote", "Espinaca",
+        	    "Fresa", "Guacamole", "Jalapeño", "Jamón", "Jengibre",
+        	    "Jitomate", "Lechuga", "Legumbres", "Mango", "Mayonesa",
+        	    "Pasas", "Pepino", "Piña", "Pimentón", "Pimiento",
+        	    "Pollo", "Res", "Salsa BBQ", "Tocino",
+        	    "Tomate Cherry", "Vainilla", "Zanahoria"
         ));
 
-        JPanel panel_in = new JPanel(new GridLayout(ingredientes.size(), 1, 0, 2));
+        panel_in = new JPanel(new GridLayout(ingredientes.size(), 1, 0, 2));
         panel_in.setBackground(Color.WHITE);
         panel_in.setPreferredSize(new Dimension(155, ingredientes.size() * 22 + 10));
 
@@ -127,6 +127,46 @@ public class Ventana_registro {
         JButton btnNewButton = new JButton("AÑADIR");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		 String nombre = textField.getText().trim();
+
+        	        if (nombre.isEmpty()) {
+        	            javax.swing.JOptionPane.showMessageDialog(frame, 
+        	                "Por favor ingresa un nombre.", "Error", 
+        	                javax.swing.JOptionPane.ERROR_MESSAGE);
+        	            return;
+        	        }
+
+        	        BaseDatos bd = BaseDatos.getInstancia();
+
+        	        int idCliente = bd.obtenerIdCliente(nombre);
+        	        if (idCliente != -1) {
+        	            javax.swing.JOptionPane.showMessageDialog(frame, 
+        	                "Ya existe un cliente con ese nombre.", "Aviso", 
+        	                javax.swing.JOptionPane.WARNING_MESSAGE);
+        	            return;
+        	        }
+        	        bd.registrarCliente(nombre);
+        	        idCliente = bd.obtenerIdCliente(nombre);
+
+        	        for (java.awt.Component comp : panel_al.getComponents()) {
+        	            if (comp instanceof JCheckBox cb && cb.isSelected()) {
+        	                int idAlergeno = bd.obtenerIdAlergeno(cb.getText());
+        	                if (idAlergeno != -1) bd.agregarAlergenoCliente(idCliente, idAlergeno);
+        	            }
+        	        }
+
+        	        for (java.awt.Component comp : panel_in.getComponents()) {
+        	            if (comp instanceof JCheckBox cb && cb.isSelected()) {
+        	                int idAlergia = bd.obtenerIdAlergiaComida(cb.getText());
+        	                if (idAlergia != -1) bd.agregarAlergiaComidaCliente(idCliente, idAlergia);
+        	            }
+        	        }
+
+        	        javax.swing.JOptionPane.showMessageDialog(frame, 
+        	            "Cliente registrado exitosamente.", "Éxito", 
+        	            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        	        frame.dispose(); 
         	}
         });
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
