@@ -16,6 +16,7 @@ public class BaseDatos {
 	private BaseDatos() {
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:BaseDatosPF.db");
+			System.out.println("BD en: " + new java.io.File("BaseDatosPF.db").getAbsolutePath());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -30,6 +31,42 @@ public class BaseDatos {
 
 	public Connection getConexion() {
 		return connect;
+	}
+	
+	public int obtenerIdAlergeno(String nombre) {
+	    try {
+	        PreparedStatement ps = connect.prepareStatement(
+	            "SELECT idAlergeno FROM alergeno WHERE LOWER(nombre) = LOWER(?)");
+	        ps.setString(1, nombre);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            int id = rs.getInt("idAlergeno");
+	            rs.close(); ps.close();
+	            return id;
+	        }
+	        rs.close(); ps.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return -1;
+	}
+
+	public int obtenerIdAlergiaComida(String nombre) {
+	    try {
+	        PreparedStatement ps = connect.prepareStatement(
+	            "SELECT idAlergia FROM alergiaComida WHERE LOWER(nombre) = LOWER(?)");
+	        ps.setString(1, nombre);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            int id = rs.getInt("idAlergia");
+	            rs.close(); ps.close();
+	            return id;
+	        }
+	        rs.close(); ps.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return -1;
 	}
 
 	public boolean clienteEsAlergicoAIngrediente(int idCliente, String alergeno) {
