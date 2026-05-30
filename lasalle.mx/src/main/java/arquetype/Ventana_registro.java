@@ -166,12 +166,25 @@ public class Ventana_registro {
         	            "Cliente registrado exitosamente.", "Éxito", 
         	            javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        	        frame.dispose(); 
+        	        frame.dispose();
+        	        new Ventana_clientes().getFrame().setVisible(true);
         	}
         });
-        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        btnNewButton.setFont(new Font("Dubai", Font.PLAIN, 12));
         btnNewButton.setBackground(new Color(214, 175, 41));
-        btnNewButton.setBounds(298, 237, 100, 22);
+        btnNewButton.setBounds(371, 237, 100, 22);
         frame.getContentPane().add(btnNewButton);
+        
+        JButton btnRegresar = new JButton("REGRESAR");
+        btnRegresar.setFont(new Font("Dubai", Font.PLAIN, 12));
+        btnRegresar.setBackground(new Color(214, 175, 41));
+        btnRegresar.setBounds(216, 237, 100, 22);
+        frame.getContentPane().add(btnRegresar);
+        btnRegresar.addActionListener(e -> {
+            frame.dispose();
+            new Ventana_clientes().getFrame().setVisible(true);
+        });
+        
     }
+    public JFrame getFrame() { return frame; }
 }

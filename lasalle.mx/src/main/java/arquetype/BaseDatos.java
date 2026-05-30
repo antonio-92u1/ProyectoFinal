@@ -16,7 +16,6 @@ public class BaseDatos {
 	private BaseDatos() {
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:BaseDatosPF.db");
-			System.out.println("BD en: " + new java.io.File("BaseDatosPF.db").getAbsolutePath());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -241,6 +240,20 @@ public class BaseDatos {
 
 		return lista;
 	}
+	
+	public ArrayList<String> obtenerNombresClientes() {
+	    ArrayList<String> lista = new ArrayList<>();
+	    try {
+	        PreparedStatement ps = connect.prepareStatement(
+	            "SELECT nombre FROM clientes ORDER BY nombre ASC");
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) lista.add(rs.getString("nombre"));
+	        rs.close(); ps.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return lista;
+	}
 
 	// Alergias
 	public void agregarAlergenoCliente(int idCliente, int idAlergeno) {
@@ -351,6 +364,24 @@ public class BaseDatos {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	public String obtenerUltimoEstadoPedido(int idCliente) {
+	    try {
+	        String sql = "SELECT estado FROM pedido WHERE idCliente = ? ORDER BY fecha DESC LIMIT 1";
+	        PreparedStatement ps = connect.prepareStatement(sql);
+	        ps.setInt(1, idCliente);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            String estado = rs.getString("estado");
+	            rs.close(); ps.close();
+	            return estado;
+	        }
+	        rs.close(); ps.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return "Sin pedidos";
 	}
 
 	// Reportes

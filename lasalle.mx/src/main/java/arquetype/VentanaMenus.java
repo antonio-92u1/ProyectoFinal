@@ -51,13 +51,14 @@ public class VentanaMenus {
     private JScrollPane scrollPane_1;
     private JLabel lblNewLabel_2;
     private JPanel panel_2;
+    private int idCliente;
     
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    VentanaMenus window = new VentanaMenus();
+                    VentanaMenus window = new VentanaMenus(1);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -66,15 +67,16 @@ public class VentanaMenus {
         });
     }
 
-    public VentanaMenus() {
+    public VentanaMenus(int idCliente) {
+        this.idCliente = idCliente;
         initialize();
     }
 
     private void initialize() {
         
         frame = new JFrame();
-        //frame.setBounds(100, 100, 630, 320);
-        frame.setBounds(100, 100, 630, 540);
+        frame.setBounds(100, 100, 630, 320);
+        //frame.setBounds(100, 100, 630, 540);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
@@ -424,8 +426,8 @@ public class VentanaMenus {
 
         
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        //scrollPane.setBounds(0, 0, 616, 287);
-        scrollPane.setBounds(0, 0, 616, 507);
+        scrollPane.setBounds(0, 0, 616, 287);
+        //scrollPane.setBounds(0, 0, 616, 507);
         frame.getContentPane().add(scrollPane);
     }
     
@@ -725,4 +727,5 @@ public class VentanaMenus {
         });
         dialog.setVisible(true);
     }
+    public JFrame getFrame() { return frame; }
 }

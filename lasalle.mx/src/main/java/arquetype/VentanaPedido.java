@@ -13,6 +13,7 @@ import javax.swing.JButton;
 public class VentanaPedido {
 
 	private JFrame frame;
+	private int idCliente;
 
 	/**
 	 * Launch the application.
@@ -21,7 +22,7 @@ public class VentanaPedido {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaPedido window = new VentanaPedido();
+					VentanaPedido window = new VentanaPedido(1);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,8 +34,9 @@ public class VentanaPedido {
 	/**
 	 * Create the application.
 	 */
-	public VentanaPedido() {
+	public VentanaPedido(int idCliente) {
 		initialize();
+		this.idCliente = idCliente;
 	}
 
 	/**
@@ -81,5 +83,7 @@ public class VentanaPedido {
 		btnFinalizar.setBounds(404, 238, 88, 22);
 		frame.getContentPane().add(btnFinalizar);
 	}
+	
+	public JFrame getFrame() { return frame; }
 
 }
