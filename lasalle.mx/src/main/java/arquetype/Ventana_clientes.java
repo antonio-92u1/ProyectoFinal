@@ -111,7 +111,7 @@ public class Ventana_clientes {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	    frame.getContentPane().add(scroll);
 
-	    JButton btnNewButton = new JButton("+ Registrate");
+	    JButton btnNewButton = new JButton("+ REGISTRATE");
 	    btnNewButton.setBackground(new Color(214, 175, 41));
 	    btnNewButton.setForeground(new Color(255, 255, 255));
 	    btnNewButton.setFont(new Font("Dubai", Font.BOLD, 15));
