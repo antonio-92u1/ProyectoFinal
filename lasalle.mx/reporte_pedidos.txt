@@ -1,0 +1,14 @@
+======================================
+        REPORTE GENERAL DE PEDIDOS
+======================================
+
+Total de ventas: $0.0
+Pedidos pendientes: 0
+Pedidos en preparación: 0
+Pedidos entregados: 0
+
+======================================
+            PEDIDOS REGISTRADOS
+======================================
+
+No hay pedidos registrados.

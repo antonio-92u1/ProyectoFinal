@@ -20,6 +20,8 @@ public class MainPrueba {
 		System.out.println(burger.nombreBase());
 		System.out.println(burger.getPrecioInicial());
 		System.out.println(burger.getExtras());
+        GeneradorReportes generador = new GeneradorReportes();
+        generador.generarReporteGeneral();
 	}
 
 }
