@@ -383,6 +383,33 @@ public class BaseDatos {
 	    }
 	}
 	
+	public void actualizarPedidosAutomaticamente() {
+	    try {
+	        String sql = """
+	            UPDATE pedido
+	            SET estado = CASE
+	                WHEN estado = 'Pendiente'
+	                     AND datetime(fecha, '+10 seconds') <= datetime('now')
+	                THEN 'En preparación'
+
+	                WHEN estado = 'En preparación'
+	                     AND datetime(fecha, '+30 seconds') <= datetime('now')
+	                THEN 'Entregado'
+
+	                ELSE estado
+	            END
+	            WHERE estado IN ('Pendiente', 'En preparación')
+	        """;
+
+	        PreparedStatement ps = connect.prepareStatement(sql);
+	        ps.executeUpdate();
+	        ps.close();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public String obtenerUltimoEstadoPedido(int idCliente) {
 	    try {
 	        String sql = "SELECT estado FROM pedido WHERE idCliente = ? ORDER BY fecha DESC LIMIT 1";
