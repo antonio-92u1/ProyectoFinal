@@ -114,16 +114,21 @@ public class BaseDatos {
 
 	private ArrayList<String> compararAlergenos(int idCliente, ArrayList<String> alergiasProducto) {
 	    ArrayList<String> alertas = new ArrayList<>();
-	    ArrayList<String> alergiasCliente = obtenerAlergenosCliente(idCliente);
+	    ArrayList<String> alergenosCliente = obtenerAlergenosCliente(idCliente);
+	    ArrayList<String> comidaCliente = obtenerAlergiasComidaCliente(idCliente);
 
 	    for (String alergiaProducto : alergiasProducto) {
-	        for (String alergiaCliente : alergiasCliente) {
-	            if (alergiaProducto.equalsIgnoreCase(alergiaCliente)) {
+	        for (String alergeno : alergenosCliente) {
+	            if (alergiaProducto.equalsIgnoreCase(alergeno) && !alertas.contains(alergiaProducto)) {
+	                alertas.add(alergiaProducto);
+	            }
+	        }
+	        for (String comida : comidaCliente) {
+	            if (alergiaProducto.equalsIgnoreCase(comida) && !alertas.contains(alergiaProducto)) {
 	                alertas.add(alergiaProducto);
 	            }
 	        }
 	    }
-
 	    return alertas;
 	}
 

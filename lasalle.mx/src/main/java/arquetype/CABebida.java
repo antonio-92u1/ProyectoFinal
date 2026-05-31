@@ -30,5 +30,19 @@ public class CABebida extends Alimento implements InterBebida {
 	public boolean isExtra() {
 		return this.extra;
 	}
+	
+	@Override
+	public ArrayList<String> getIngredientes() {
+		// TODO Auto-generated method stub
+		return super.getIngredientes();
+	}
+	
+	@Override
+	public ArrayList<String> getAlergenos() {
+		// TODO Auto-generated method stub
+		return super.getAlergenos();
+	}
+	
+	
 
 }

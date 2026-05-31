@@ -34,4 +34,16 @@ public class CAPostre extends Alimento implements InterPostre {
 	public ArrayList<String> getExtras() {
 		return new ArrayList<>();
 	}
+    
+    @Override
+	public ArrayList<String> getIngredientes() {
+		// TODO Auto-generated method stub
+		return super.getIngredientes();
+	}
+	
+	@Override
+	public ArrayList<String> getAlergenos() {
+		// TODO Auto-generated method stub
+		return super.getAlergenos();
+	}
 }

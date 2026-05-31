@@ -24,4 +24,16 @@ public class CAPan extends Alimento implements InterPan {
 	public ArrayList<String> getExtras() {
 		return new ArrayList<>();
 	}
+    
+    @Override
+	public ArrayList<String> getIngredientes() {
+		// TODO Auto-generated method stub
+		return super.getIngredientes();
+	}
+	
+	@Override
+	public ArrayList<String> getAlergenos() {
+		// TODO Auto-generated method stub
+		return super.getAlergenos();
+	}
 }

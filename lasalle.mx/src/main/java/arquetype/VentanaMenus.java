@@ -50,7 +50,9 @@ public class VentanaMenus {
     private JScrollPane scrollPane_1;
     private JLabel lblNewLabel_2;
     private JPanel panel_2;
+    private ArrayList<String> itemsPedido = new ArrayList<>();
     private int idCliente;
+    
     
 
     public static void main(String[] args) {
@@ -345,7 +347,7 @@ public class VentanaMenus {
         lblNewLabel_1.setBounds(25, 11, 434, 22);
         panel_1.add(lblNewLabel_1);
         
-        lblNewLabel = new JLabel("Escoge hasta 1 elemento por grupo");
+        lblNewLabel = new JLabel("Escoge hasta 1 elemento por grupo y selecciona añadir");
         lblNewLabel.setForeground(new Color(255, 255, 255));
         lblNewLabel.setFont(new Font("Dubai", Font.BOLD, 15));
         lblNewLabel.setBounds(25, 31, 434, 22);
@@ -398,6 +400,9 @@ public class VentanaMenus {
         btnNewButton.setBackground(new Color(158, 9, 15));
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		frame.dispose();
+    	        VentanaPedido ventPed = new VentanaPedido(idCliente);
+    	        ventPed.getFrame().setVisible(true);
         	}
         });
         btnNewButton.setBounds(304, 580, 98, 22);
@@ -407,6 +412,37 @@ public class VentanaMenus {
         btnAadir.setForeground(new Color(158, 9, 15));
         btnAadir.setBackground(new Color(214, 175, 41));
         btnAadir.setBounds(435, 580, 88, 22);
+        btnAadir.addActionListener(e -> {
+            if (tacoSel != null) {
+                itemsPedido.add(tacoSel.getNombre() + " - $" + tacoSel.getPrecio());
+                tacoSel = null;
+            }
+            if (sushiSel != null) {
+                itemsPedido.add(sushiSel.getNombre() + " - $" + sushiSel.getPrecio());
+                sushiSel = null;
+            }
+            if (panSel != null) {
+                itemsPedido.add(panSel.getNombre() + " - $" + panSel.getPrecio());
+                panSel = null;
+            }
+            if (burgerSel != null) {
+                itemsPedido.add(burgerSel.getNombre() + " - $" + burgerSel.getPrecio());
+                burgerSel = null;
+            }
+            if (ensaladaSel != null) {
+                itemsPedido.add(ensaladaSel.getNombre() + " - $" + ensaladaSel.getPrecio());
+                ensaladaSel = null;
+            }
+            if (postreSel != null) {
+                itemsPedido.add(postreSel.getNombre() + " - $" + postreSel.getPrecio());
+                postreSel = null;
+            }
+            if (bebidaSel != null) {
+                itemsPedido.add(bebidaSel.getNombre() + " - $" + bebidaSel.getPrecio());
+                bebidaSel = null;
+            }
+            actualizarPanelPedido();
+        });
         panel.add(btnAadir);
         
         scrollPane_1 = new JScrollPane();
@@ -473,6 +509,7 @@ public class VentanaMenus {
                 }
             }
             tacoSel = tacoConExtras;
+            verificarAlergias(tacoConExtras);
             dialog.dispose();
         });
         dialog.setVisible(true);
@@ -514,6 +551,7 @@ public class VentanaMenus {
                 }
             }
             sushiSel = sushiConExtras;
+            verificarAlergias(sushiConExtras);
             dialog.dispose();
         });
         dialog.setVisible(true);
@@ -553,6 +591,7 @@ public class VentanaMenus {
                 }
             }
             panSel = panConExtras;
+            verificarAlergias(panConExtras);
             dialog.dispose();
         });
         dialog.setVisible(true);
@@ -600,6 +639,7 @@ public class VentanaMenus {
                 }
             }
             burgerSel = burgerConExtras;
+            verificarAlergias(burgerConExtras);
             dialog.dispose();
         });
         dialog.setVisible(true);
@@ -641,6 +681,7 @@ public class VentanaMenus {
                 }
             }
             ensaladaSel = saladConExtras;
+            verificarAlergias(saladConExtras);
             dialog.dispose();
         });
         dialog.setVisible(true);
@@ -682,12 +723,18 @@ public class VentanaMenus {
                 }
             }
             postreSel = postreConExtras;
+            verificarAlergias(postreConExtras);
             dialog.dispose();
         });
         dialog.setVisible(true);
     }
     
     private void bebidaExtras(CABebida bebida) {
+    	String nombre = bebida.getNombre().toLowerCase();
+    	if (!nombre.contains("americano") && !nombre.contains("capuccino") && !nombre.contains("malteada")) {
+    	    bebidaSel = bebida;
+    	    return;
+    	}
         JDialog dialog = new JDialog(frame, "Extras para " + bebida.getNombre(), true);
         dialog.setBounds(200, 200, 300, 380);
         dialog.getContentPane().setLayout(null);
@@ -696,14 +743,40 @@ public class VentanaMenus {
         lblTitulo.setForeground(new Color(179, 70, 34));
         lblTitulo.setBounds(20, 10, 250, 20);
         dialog.getContentPane().add(lblTitulo);
-        String[] nombresExtras = {"Crema batida", "Jarabe Vainilla", "Leche Almendra", "Leche Deslactosada"};
-        JCheckBox[] checkboxes = new JCheckBox[nombresExtras.length];
-        for (int i = 0; i < nombresExtras.length; i++) {
-            checkboxes[i] = new JCheckBox(nombresExtras[i]);
-            checkboxes[i].setBounds(20, 40 + i * 25, 200, 20);
-            checkboxes[i].setFont(new Font("Dubai", Font.PLAIN, 12));
-            dialog.getContentPane().add(checkboxes[i]);
-        }
+        JCheckBox cbCrema = new JCheckBox("Crema batida");
+        cbCrema.setBounds(20, 40, 200, 20);
+        cbCrema.setFont(new Font("Dubai", Font.PLAIN, 12));
+        dialog.getContentPane().add(cbCrema);
+
+        JCheckBox cbVainilla = new JCheckBox("Jarabe Vainilla");
+        cbVainilla.setBounds(20, 65, 200, 20);
+        cbVainilla.setFont(new Font("Dubai", Font.PLAIN, 12));
+        dialog.getContentPane().add(cbVainilla);
+
+        JLabel lblLeche = new JLabel("Tipo de leche:");
+        lblLeche.setFont(new Font("Dubai", Font.BOLD, 12));
+        lblLeche.setForeground(new Color(179, 70, 34));
+        lblLeche.setBounds(20, 95, 150, 20);
+        dialog.getContentPane().add(lblLeche);
+
+        ButtonGroup grupoLeche = new ButtonGroup();
+        JRadioButton rbNormal = new JRadioButton("Leche Entera");
+        JRadioButton rbAlmendra = new JRadioButton("Leche Almendra");
+        JRadioButton rbDeslac = new JRadioButton("Leche Deslactosada");
+        rbNormal.setBounds(20, 115, 200, 20);
+        rbAlmendra.setBounds(20, 138, 200, 20);
+        rbDeslac.setBounds(20, 161, 200, 20);
+        rbNormal.setSelected(true);
+        rbNormal.setFont(new Font("Dubai", Font.PLAIN, 12));
+        rbAlmendra.setFont(new Font("Dubai", Font.PLAIN, 12));
+        rbDeslac.setFont(new Font("Dubai", Font.PLAIN, 12));
+        grupoLeche.add(rbNormal);
+        grupoLeche.add(rbAlmendra);
+        grupoLeche.add(rbDeslac);
+        dialog.getContentPane().add(rbNormal);
+        dialog.getContentPane().add(rbAlmendra);
+        dialog.getContentPane().add(rbDeslac);
+
         JButton btnConfirmar = new JButton("Confirmar");
         btnConfirmar.setBackground(new Color(158, 9, 15));
         btnConfirmar.setForeground(new Color(255, 255, 255));
@@ -711,21 +784,56 @@ public class VentanaMenus {
         dialog.getContentPane().add(btnConfirmar);
         btnConfirmar.addActionListener(e -> {
             InterBebida bebidaConExtras = bebida;
-            for (int i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].isSelected()) {
-                    switch (i) {
-                    case 0: bebidaConExtras = new ExtraBCremaBatida(bebidaConExtras); break;
-                    case 1: bebidaConExtras = new ExtraBJarabeVainillla(bebidaConExtras); break;  
-                    case 2: bebidaConExtras = new ExtraBLecheAlmendra(bebidaConExtras); break;
-                    case 3: bebidaConExtras = new ExtraBLecheDeslasctosada(bebidaConExtras); break;
-                    }
-                }
-            }
+            if (cbCrema.isSelected())    bebidaConExtras = new ExtraBCremaBatida(bebidaConExtras);
+            if (cbVainilla.isSelected()) bebidaConExtras = new ExtraBJarabeVainillla(bebidaConExtras);
+            if (rbAlmendra.isSelected()) bebidaConExtras = new ExtraBLecheAlmendra(bebidaConExtras);
+            if (rbDeslac.isSelected())   bebidaConExtras = new ExtraBLecheDeslasctosada(bebidaConExtras);
             bebidaSel = bebidaConExtras;
+            verificarAlergias(bebida);
             dialog.dispose();
         });
         dialog.setVisible(true);
     }
+    
+    private void actualizarPanelPedido() {
+        panel_2.removeAll();
+        panel_2.setLayout(new java.awt.GridLayout(itemsPedido.size(), 1, 0, 2));
+
+        for (String item : itemsPedido) {
+            JLabel lbl = new JLabel(item);
+            lbl.setFont(new Font("Dubai", Font.PLAIN, 11));
+            lbl.setForeground(new Color(50, 50, 50));
+            panel_2.add(lbl);
+        }
+
+        panel_2.revalidate();
+        panel_2.repaint();
+    }
+    
+    private void verificarAlergias(Object producto) {
+        BaseDatos bd = BaseDatos.getInstancia();
+        ArrayList<String> alertas = new ArrayList<>();
+
+        if (producto instanceof InterComida)
+            alertas = bd.detectarAlergiasProducto(idCliente, (InterComida) producto);
+        else if (producto instanceof InterSushiEnsalda)
+            alertas = bd.detectarAlergiasProducto(idCliente, (InterSushiEnsalda) producto);
+        else if (producto instanceof InterPan)
+            alertas = bd.detectarAlergiasProducto(idCliente, (InterPan) producto);
+        else if (producto instanceof InterPostre)
+            alertas = bd.detectarAlergiasProducto(idCliente, (InterPostre) producto);
+        else if (producto instanceof InterBebida)
+            alertas = bd.detectarAlergiasProducto(idCliente, (InterBebida) producto);
+
+        if (!alertas.isEmpty()) {
+            String lista = String.join(", ", alertas);
+            javax.swing.JOptionPane.showMessageDialog(frame,
+                "⚠️ Este producto contiene: " + lista + "\nque coincide con tus restricciones registradas.",
+                "Alerta de alergia",
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
     public JFrame getFrame() { 
     	return frame; }
 }
