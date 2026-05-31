@@ -3,14 +3,14 @@ package arquetype;
 import java.util.ArrayList;
 
 public class Carrito {
-	 private ArrayList<Object> productos;
+	 private ArrayList<Alimento> productos;
 	    private BaseDatos bd;
 	    public Carrito(BaseDatos bd) {
 	        this.productos = new ArrayList<>();
 	        this.bd = bd;
 	    }
 
-	    public void agregarProducto(Object producto) {
+	    public void agregarProducto(Alimento producto) {
 	        productos.add(producto);
 	        System.out.println("Producto agregado : "+Name(producto));
 	    }
@@ -18,7 +18,7 @@ public class Carrito {
 	        if (i <= 0 || i > productos.size()) {
 	        	System.out.println("Número de alimento inexistente");
 	        } else {
-	        	Object fuera = productos.remove(i);
+	        	Alimento fuera = productos.remove(i);
 	            System.out.println("El producto " + Name(fuera)+" se ha quitado de tu carro ");
 	        }
 	    }
@@ -42,7 +42,7 @@ public class Carrito {
 	            return -1;
 	        }
 	        for (int i = 0; i < productos.size(); i++) {
-	            Object prod = productos.get(i);
+	            Alimento prod = productos.get(i);
 	            String nombreBase = Name(prod);
 	            String extrasStr = extruss(prod);
 	            String descripcionFinal = nombreBase;
@@ -57,7 +57,7 @@ public class Carrito {
 	        System.out.println("Tu pedido es: " + idPedido + " confirmado. Total: $" + total);
 	        return idPedido;
 	    }
-	    private String Name(Object o) {
+	    private String Name(Alimento o) {
 	        if (o instanceof Alimento)
 	        	return ((Alimento) o).getNombre();
 	        if (o instanceof InterBebida) 
@@ -73,7 +73,7 @@ public class Carrito {
 	        else
 	        	return "Desconocido";
 	    }
-	    private double precio(Object o) {
+	    private double precio(Alimento o) {
 	        if (o instanceof Alimento) 
 	        	return ((Alimento) o).getPrecio();
 	        if (o instanceof InterBebida) 
@@ -89,7 +89,7 @@ public class Carrito {
 	        else
 	        	return 0.0;
 	    }
-	    private double precio0(Object o) {
+	    private double precio0(Alimento o) {
 	        if (o instanceof Alimento) 
 	        	return ((Alimento) o).getPrecio();
 	        if (o instanceof InterBebida) 
@@ -105,7 +105,7 @@ public class Carrito {
 	        else
 	        	return 0.0;
 	    }
-	    private String extruss(Object o) {
+	    private String extruss(Alimento o) {
 	        if (o instanceof InterBebida) 
 	        	return ((InterBebida) o).getExtras().toString();
 	        if (o instanceof InterPan) 
